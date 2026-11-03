@@ -81,6 +81,8 @@ body{font-feature-settings:'ss01' on}
 .card-foot{font-size:10px}
 .creative-card::after,.company-card::after,.small-card::after,.journal-card::after{content:'';position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(340px circle at var(--card-x,50%) var(--card-y,0%),#d4b87512,transparent 68%);opacity:0;transition:opacity .4s}
 .about-portrait img,.work-feature-photo,.feature-photo-panel img{border-radius:10px;box-shadow:0 22px 65px #0004}
+/* Keep the face visible when the tall sunset portrait fills a shorter panel. */
+.feature-photo-panel img[src$="aman-sunset.webp"],.contact-card>img[src$="aman-sunset.webp"]{object-position:50% 0%}
 .about-portrait::after{border-radius:10px}
 .featured-brands{padding:0 27px;border:1px solid var(--line);border-radius:14px;background:#d4b87503}
 .featured-brand{gap:19px;padding:20px 0}

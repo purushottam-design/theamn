@@ -8,14 +8,15 @@ import {root,render} from './render.mjs';
 let count=0;
 const check=(value,message)=>{assert.ok(value,message);count++};
 function harness({reduced=false,height=900,heroHeight=880,fail=false,loading=false}={}){
- const triggers=[],contexts=[],tweens=[];let media,refreshes=0,warnings=0,frames=0;
+ const triggers=[],contexts=[],tweens=[],pendingFrames=new Map();let media,refreshes=0,warnings=0,frames=0,now=0;
  const result=render('index',{interactive:true,reduced,setup({window,document,context}){
   Object.defineProperty(document,'readyState',{value:loading?'loading':'complete',configurable:true});
   Object.defineProperty(window.HTMLElement.prototype,'offsetHeight',{get:()=>heroHeight,configurable:true});
   window.innerHeight=height;
   media=new window.EventTarget();media.matches=reduced;
   context.matchMedia=query=>query.includes('prefers-reduced-motion')?media:{matches:false,addEventListener(){}};
-  context.requestAnimationFrame=()=>{frames++;return 1};
+  context.requestAnimationFrame=callback=>{const id=++frames;pendingFrames.set(id,callback);return id};
+  context.cancelAnimationFrame=id=>pendingFrames.delete(id);
   context.console={...console,warn(){warnings++}};
   window.gsap={
    registerPlugin(){},
@@ -38,7 +39,8 @@ function harness({reduced=false,height=900,heroHeight=880,fail=false,loading=fal
   window.scrollTo=({top})=>{window.scrollY=top};
  }});
  const emit=(target,type,props={})=>{const e=new result.window.Event(type,{bubbles:true,cancelable:true});Object.assign(e,props);target.dispatchEvent(e)};
- return {...result,triggers,contexts,tweens,emit,media,stats:()=>({refreshes,warnings,frames})};
+ const frame=ms=>{now+=ms;const callbacks=[...pendingFrames.values()];pendingFrames.clear();callbacks.forEach(fn=>fn(now))};
+ return {...result,triggers,contexts,tweens,emit,media,frame,stats:()=>({refreshes,warnings,frames,pending:pendingFrames.size})};
 }
 const h=harness(),d=h.document,t=h.triggers[0];
 const photos=[...d.querySelectorAll('.orbit-photo')],scene=d.querySelector('.orbit-scene');
@@ -47,8 +49,8 @@ const xyz=photo=>photo.style.transform.match(/translate3d\(([-.\d]+)px,([-.\d]+)
 check(h.triggers.length===1&&t.config.pin===true&&t.config.pinSpacing===true,'hero has one pin with reserved space before the next section');
 check(t.config.scrub===true&&t.config.invalidateOnRefresh===true,'scroll scrubbing and refresh invalidation enabled');
 check(t.config.start==='top top'&&t.end===2700,'desktop pins from the first scroll with a responsive scroll distance');
-check(h.tweens[0].from.progress===0&&h.tweens[0].to.progress===1&&h.tweens[0].to.paused===true&&h.tweens[0].to.ease==='none','scroll owns the entire linear turn with no timed autoplay');
-check(h.stats().frames===0,'no independent rotation animation frames are scheduled');
+check(h.tweens[0].from.progress===0&&h.tweens[0].to.progress===1&&h.tweens[0].to.paused===true&&h.tweens[0].to.ease==='none','scroll still controls a complete linear turn');
+check(h.stats().pending===1,'slow continuous rotation starts automatically');
 check(photos.length===9&&new Set(photos.map(p=>p.querySelector('img').src)).size===9,'all nine existing photos retained');
 check(new Set(transforms()).size===9&&xyz(photos[0])[2]>0&&xyz(photos[4])[2]<0,'actual photos span nine unique positions with front and back depth');
 const initial=photos.map(xyz),titles=new Set();
@@ -87,6 +89,19 @@ const deferred=harness({loading:true});check(deferred.triggers.length===0,'initi
 deferred.emit(deferred.document,'DOMContentLoaded');check(deferred.triggers.length===1,'scroll sequence initializes after all deferred scripts load');
 const fallback=render('index',{interactive:true});fallback.document.querySelector('[data-portrait="3"]').click();
 check(fallback.document.getElementById('portrait-name').textContent==='Building ideas','missing GSAP leaves a working gallery and normal page scrolling');
+const auto=harness(),autoPhotos=[...auto.document.querySelectorAll('.orbit-photo')];
+const beforeAuto=autoPhotos.map(xyz);auto.frame(0);
+for(let i=0;i<100;i++)auto.frame(100);
+check(autoPhotos.every((p,i)=>Math.abs(xyz(p)[0]-beforeAuto[i][0])>1),'every photo revolves automatically without scrolling');
+check(auto.window.scrollY===0&&auto.triggers[0].progress===0,'autoplay leaves page scroll and pinned scroll progress unchanged');
+for(let i=0;i<300;i++)auto.frame(100);
+check(autoPhotos.every((p,i)=>xyz(p).every((n,j)=>Math.abs(n-beforeAuto[i][j])<.002)),'slow automatic rotation completes one seamless turn in forty seconds');
+auto.document.hidden=true;auto.emit(auto.document,'visibilitychange');check(auto.stats().pending===0,'hidden tabs stop the automatic animation');
+auto.document.hidden=false;auto.emit(auto.document,'visibilitychange');auto.frame(1000);
+check(autoPhotos.every((p,i)=>xyz(p).every((n,j)=>Math.abs(n-beforeAuto[i][j])<.002)),'tab restoration resumes without an animation jump');
+auto.media.matches=true;auto.emit(auto.media,'change');check(auto.stats().pending===0,'reduced motion disables automatic rotation');
+auto.media.matches=false;auto.emit(auto.media,'change');auto.emit(auto.window,'pagehide');
+check(auto.stats().pending===0,'pagehide cancels automatic animation frames');
 const css=postcss.parse(fs.readFileSync(path.join(root,'assets/css/hero-orbit.css'),'utf8'));
 check(css.nodes.length>0,'orbit stylesheet parses');
 console.log('PASS: '+count+' scroll pinning, full rotation, reverse, controls, lifecycle, responsive geometry, reduced-motion and failure checks.');

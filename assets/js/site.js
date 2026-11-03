@@ -199,8 +199,9 @@ function initPortraits(){
  const cards=[...gallery.querySelectorAll('[data-portrait]')],name=document.getElementById('portrait-name'),index=document.getElementById('portrait-index');
  const reduced=matchMedia('(prefers-reduced-motion: reduce)'),tau=Math.PI*2;
  const state={progress:0};let width=0,selected=-1,trigger=null,context=null,observer=null,suspended=false;
+ let idleTurns=0,autoFrame=0,lastFrame=null,visible=true,visibilityObserver=null;
  function paint(){
-  const phase=-state.progress*tau;
+  const turns=state.progress+idleTurns,phase=-turns*tau;
   cards.forEach((card,i)=>{
    const angle=phase+i*tau/cards.length,depth=Math.cos(angle);
    const x=Math.sin(angle)*width*.34,y=depth*width*.19,z=depth*width*.34;
@@ -208,12 +209,28 @@ function initPortraits(){
    card.style.opacity=String(.58+(depth+1)*.21);
    card.style.setProperty('--shade',String(.12+(1-depth)*.3));
   });
-  const active=Math.round(state.progress*cards.length)%cards.length;
+  const active=((Math.round(turns*cards.length)%cards.length)+cards.length)%cards.length;
   if(active===selected)return;selected=active;
   name.textContent=portraits[active].name;index.textContent=String(active+1).padStart(2,'0')+' / '+String(cards.length).padStart(2,'0');
   cards.forEach((card,i)=>{card.classList.toggle('is-front',active===i);card.setAttribute('aria-pressed',String(active===i))});
  }
  function resize(){width=scene.getBoundingClientRect().width;scene.style.perspective=width*1.85+'px';paint()}
+ function canRotate(){return !suspended&&!reduced.matches&&!document.hidden&&visible}
+ function autoTick(now){
+  autoFrame=0;
+  if(!canRotate()){lastFrame=null;return}
+  const elapsed=lastFrame===null?0:Math.min(Math.max(0,now-lastFrame),100);
+  lastFrame=now;
+  if(!window.AmanIntro?.active){
+   // Separate from scroll progress so idle rotation never moves the page.
+   idleTurns=(idleTurns+elapsed/40000)%1;paint();
+  }
+  autoFrame=requestAnimationFrame(autoTick);
+ }
+ function syncAuto(){
+  if(!canRotate()){cancelAnimationFrame(autoFrame);autoFrame=0;lastFrame=null}
+  else if(!autoFrame){lastFrame=null;autoFrame=requestAnimationFrame(autoTick)}
+ }
  function stop(){
   trigger?.kill(true);trigger=null;context?.revert();context=null;
   hero.classList.remove('has-scroll-orbit');
@@ -241,6 +258,7 @@ function initPortraits(){
  }
  function refresh(){if(!suspended&&trigger)window.ScrollTrigger.refresh()}
  function choose(i){
+  idleTurns=0;
   const active=(i%cards.length+cards.length)%cards.length;
   let progress=active/cards.length;
   if(i===cards.length)progress=1;
@@ -259,14 +277,16 @@ function initPortraits(){
  });
  function observe(){
   if('ResizeObserver' in window){observer=new window.ResizeObserver(resize);observer.observe(scene)}
+  if('IntersectionObserver' in window){visibilityObserver=new window.IntersectionObserver(entries=>{visible=entries[0].isIntersecting;syncAuto()});visibilityObserver.observe(gallery)}
  }
- reduced.addEventListener('change',()=>{stop();if(!reduced.matches)start();resize()});
+ reduced.addEventListener('change',()=>{stop();if(!reduced.matches)start();resize();syncAuto()});
+ document.addEventListener('visibilitychange',syncAuto);
  window.addEventListener('resize',resize,{passive:true});
  window.addEventListener('aman:intro-ended',refresh);
  window.addEventListener('load',refresh,{once:true});
- window.addEventListener('pagehide',()=>{suspended=true;stop();observer?.disconnect();observer=null});
- window.addEventListener('pageshow',event=>{if(event.persisted){suspended=false;observe();start();refresh()}});
- resize();observe();
+ window.addEventListener('pagehide',()=>{suspended=true;syncAuto();stop();observer?.disconnect();observer=null;visibilityObserver?.disconnect();visibilityObserver=null});
+ window.addEventListener('pageshow',event=>{if(event.persisted){suspended=false;observe();start();refresh();syncAuto()}});
+ resize();observe();syncAuto();
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
  document.fonts?.ready.then(refresh);
 }

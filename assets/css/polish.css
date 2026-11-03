@@ -1,0 +1,238 @@
+/* Editorial refinement — the existing charcoal/gold identity and content. */
+:root{--card-radius:14px;--soft-gold:rgba(212,184,117,.24)}
+body{font-feature-settings:'ss01' on}
+.section-heading,.subhead,.inner-hero h1{text-wrap:balance}
+.section-text{font-size:16px;line-height:1.85;color:#b6b1a6}
+.eyebrow{font-size:10px;line-height:1.8;letter-spacing:.18em}
+.eyebrow::before{width:32px}
+.chapter-top{padding-top:23px;margin-bottom:56px}
+.part-index{font-size:19px}
+.part-label{font-size:10px;letter-spacing:.16em}
+/* A compact glass navigation bar keeps the page in view. */
+.site-header{top:18px;left:0;right:0;width:min(1420px,calc(100% - 64px));margin-inline:auto;border:1px solid #d4b87529;border-radius:12px;background:#11110fe3;box-shadow:0 12px 45px #0003;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+.site-header.scrolled{background:#11110ff2;border-color:#d4b87538;box-shadow:0 10px 36px #0006}
+.header-inner.container-aman{width:100%;min-height:76px;padding:0 25px;gap:22px}
+.brand-mark{width:42px;height:42px;border-radius:5px}
+.brand-label{font-size:12px;letter-spacing:.12em}
+.brand-label small{font-size:8px;letter-spacing:.17em}
+.header-navigation{gap:26px}
+.header-navigation a{font-size:11px;padding-block:28px;color:#c7c1b4}
+.header-navigation a::after{bottom:18px;height:2px;border-radius:2px}
+.header-navigation a.active{color:#e6ce97}
+.header-cta{font-size:10px;min-height:41px;padding:11px 17px}
+/* Larger type and more breathing room around the portrait. */
+.hero-home{min-height:880px;height:max(880px,100svh);background:radial-gradient(ellipse at 80% 38%,#8f754024,transparent 52%),radial-gradient(ellipse at 5% 85%,#8f75400b,transparent 50%),var(--ink)}
+.hero-home::before{left:56%;opacity:.6}
+.hero-shell{grid-template-columns:minmax(0,1.18fr) minmax(0,1fr);gap:7%;padding:155px 0 110px}
+.hero-title{font-size:clamp(62px,7.1vw,108px);line-height:1.075;letter-spacing:-.07em;font-weight:500}
+.hero-edition{font-size:10px;letter-spacing:.16em;margin-bottom:30px}
+.hero-description{font-size:16px;max-width:440px;line-height:1.8;color:#b8b2a6;margin-top:27px}
+.hero-roles{font-size:9px;max-width:470px;color:#c9c1b1;line-height:2.1;margin-top:22px}
+.hero-actions{margin-top:32px;gap:12px;max-width:540px}
+.hero-actions .btn-aman:last-child{font-size:10px;margin-top:0}
+.hero-scroll{font-size:9px;letter-spacing:.14em;margin-top:30px}
+.hero-bottomline{padding-block:21px}
+.hero-bottomline-inner{font-size:9px;letter-spacing:.15em}
+.hero-visual{max-width:490px;height:620px;padding-bottom:86px}
+.portrait-frame{padding:9px;border-color:#d4b87563;border-radius:10px;background:linear-gradient(145deg,#d4b87509,#090909);box-shadow:0 30px 75px #0006}
+.portrait-frame::after{border-radius:10px;inset:13px -13px -13px 13px;border-color:#d4b87521}
+.portrait-image-wrap{border-radius:5px}
+.portrait-caption strong{font-size:33px}
+.portrait-topline{font-size:9px}
+.portrait-selector{gap:6px;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;padding:8px 5px 6px;scrollbar-width:thin;scrollbar-color:#aa8e5166 transparent;scroll-snap-type:x proximity}
+.portrait-thumb{width:44px;min-width:44px;max-width:44px;height:54px;border-radius:5px;scroll-snap-align:center;opacity:.58}
+.portrait-thumb img{border-radius:2px}
+.portrait-thumb.active{box-shadow:0 3px 15px #d4b87518}
+.portrait-side-note{font-size:9px;letter-spacing:.18em}
+.portrait-stamp{box-shadow:0 10px 35px #0007;border:1px solid #f4dfad80}
+/* Controls have a clear visual hierarchy and comfortable hit areas. */
+.btn-aman{min-height:54px;padding:17px 24px;border-radius:6px;font-size:11px;letter-spacing:.065em;position:relative;isolation:isolate;overflow:hidden}
+.btn-aman:not(.btn-aman-outline){background:linear-gradient(115deg,#d4b875,#e1c88e 48%,#c6a968);border-color:#e6ce97;box-shadow:inset 0 1px 0 #fff3,0 5px 22px #bca36710}
+.btn-aman:not(.btn-aman-outline):hover{box-shadow:inset 0 1px 0 #fff5,0 10px 32px #d4b87525}
+.btn-aman-outline{background:#d4b87504;border-color:#d4b8753d}
+.btn-aman-outline:hover{border-color:#d4b87580}
+.header-cta{min-height:41px;padding:11px 17px;font-size:10px}
+.round-icon,.arrow-circle{width:41px;height:41px;border-color:#d4b8752b}
+.link-arrow{font-size:11px;letter-spacing:.08em}
+/* Card surfaces have depth without reducing text contrast. */
+.creative-grid{gap:20px;border:0;background:transparent}
+.creative-card,.company-card,.small-card,.journal-card{position:relative;isolation:isolate;border:1px solid #d4b87525;border-radius:var(--card-radius);background:linear-gradient(145deg,#1b1b17,#121210 78%);box-shadow:0 8px 32px #0002;overflow:hidden}
+.creative-card{min-height:375px;padding:31px;gap:24px}
+.creative-card h3{font-size:30px;line-height:1.25;letter-spacing:-.045em}
+.creative-card p{font-size:14px;line-height:1.8;max-width:320px}
+.creative-card-top{font-size:10px;color:#b3a993}
+.creative-card-footer .micro-label{font-size:9px}
+.creative-icon{width:68px;height:68px;display:grid;place-items:center;font-size:42px;margin-bottom:21px;border:1px solid #d4b87528;border-radius:15px;background:linear-gradient(145deg,#d4b8750c,transparent)}
+.creative-card::before{border-color:#d4b87513;right:-105px;bottom:-135px;width:330px;height:330px}
+.company-grid{gap:22px}
+.company-card{padding:31px;min-height:365px}
+.company-initials{width:54px;height:54px;border-radius:10px;background:linear-gradient(140deg,#d4b87510,transparent);font-size:20px}
+.company-category{font-size:9px}
+.company-card h3{font-size:28px;letter-spacing:-.045em;line-height:1.25}
+.company-card p{font-size:14px;line-height:1.8}
+.company-serial{font-size:11px}
+.company-card-bottom{margin-top:25px;padding-top:22px}
+.company-link{font-size:10px;min-height:28px;display:inline-flex;align-items:center}
+.year{font-size:9px}
+.small-card,.journal-card{padding:31px;min-height:270px}
+.small-card h3,.journal-card h3{font-size:27px;letter-spacing:-.04em;line-height:1.28}
+.small-card p,.journal-card p{font-size:14px;line-height:1.8}
+.card-num,.journal-card small{font-size:10px}
+.card-foot{font-size:10px}
+.creative-card::after,.company-card::after,.small-card::after,.journal-card::after{content:'';position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(340px circle at var(--card-x,50%) var(--card-y,0%),#d4b87512,transparent 68%);opacity:0;transition:opacity .4s}
+.about-portrait img,.work-feature-photo,.feature-photo-panel img{border-radius:10px;box-shadow:0 22px 65px #0004}
+.about-portrait::after{border-radius:10px}
+.featured-brands{padding:0 27px;border:1px solid var(--line);border-radius:14px;background:#d4b87503}
+.featured-brand{gap:19px;padding:20px 0}
+.featured-brand:first-child{border-top:0}
+.featured-brand:last-child{border-bottom:0}
+.featured-brand strong{font-size:16px;letter-spacing:-.025em}
+.featured-brand small{font-size:11px;margin-top:7px}
+.brand-number{font-size:14px}
+.stat-item strong{font-size:42px}
+.stat-item p{font-size:10px;line-height:1.8}
+/* Interior pages and forms share the same surface treatment. */
+.inner-hero{padding-top:181px;min-height:580px}
+.inner-hero h1{line-height:1.12;font-size:clamp(56px,7vw,101px)}
+.inner-hero p{font-size:16px;max-width:640px;line-height:1.85;color:#bbb3a4}
+.hero-aside-img{opacity:.22;border-radius:12px;width:330px}
+.filter-bar{margin-bottom:25px}
+.search-control input{padding-block:18px;border-radius:8px;font-size:14px;background:linear-gradient(120deg,#191915,#11110f)}
+.search-control input:focus{border-color:#d4b87580}
+.category-meta{font-size:12px}
+.category-filters{gap:8px;margin-bottom:35px}
+.category-filters button{min-height:43px;padding:11px 15px;border-radius:6px;font-size:11px}
+.venture-list{display:grid;gap:12px}
+.venture-card,.venture-card:first-child{border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.venture-card[open]{background:linear-gradient(135deg,#d4b87508,#11110f);border-color:#d4b87540}
+.venture-card summary{padding:26px 27px}
+.venture-card h3{line-height:1.3;letter-spacing:-.04em}
+.venture-content{padding:8px 67px 32px}
+.venture-content p{font-size:14px}
+.contact-form,.contact-card{border-radius:14px;box-shadow:0 15px 55px #0003}
+.contact-form{padding:37px;background:linear-gradient(140deg,#191915,#11110f)}
+.form-field{min-height:52px;padding:16px 18px;font-size:14px;border-radius:7px}
+.input-label{font-size:10px;line-height:1.6;color:#d1c8b6}
+.info-line{font-size:14px}
+.info-line strong{font-size:10px}
+.form-note{font-size:12px}
+.badge-soon{font-size:9px;border-radius:5px}
+.placeholder-panel{border-radius:14px}
+.cta-section{padding:130px 0}
+.cta-section .section-heading{max-width:1000px}
+.cta-secondary .link-arrow{font-size:10px}
+.footer-top{padding-block:76px 56px}
+.footer-brand p{font-size:14px;max-width:310px}
+.footer-col h4{font-size:10px}
+.footer-col>a{font-size:13px;line-height:2.6}
+.footer-bottom{font-size:9px;line-height:1.7}
+.studio-title{font-size:9px}
+.studio-link{font-size:11px}
+@media(hover:hover) and (pointer:fine){
+ .creative-card:hover::after,.company-card:hover::after,.small-card:hover::after,.journal-card:hover::after{opacity:1}
+ .creative-card:hover,.company-card:hover,.small-card:hover,.journal-card:hover{border-color:#d4b87570}
+}
+@media(max-width:1260px){
+ .site-header{width:calc(100% - 40px)}
+ .header-inner.container-aman{padding-inline:21px}
+ .header-navigation{gap:19px}
+ .hero-title{font-size:clamp(58px,6.9vw,90px)}
+ .hero-visual{height:570px;max-width:420px}
+ .hero-edition{font-size:9px}
+ .portrait-thumb{width:37px;min-width:37px;height:50px}
+ .creative-card,.company-card,.small-card,.journal-card{padding:26px}
+}
+@media(max-width:1080px){
+ .site-header{top:12px;width:calc(100% - 32px)}
+ .header-inner.container-aman{min-height:68px}
+ .hero-home{height:auto;min-height:830px}
+ .hero-shell{gap:5%;padding:145px 0 110px;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
+ .hero-title{font-size:clamp(52px,6.8vw,73px)}
+ .hero-edition{font-size:8px}
+ .hero-description{font-size:15px}
+ .hero-visual{height:515px;padding-bottom:82px}
+ .portrait-thumb{width:34px;min-width:34px;height:48px}
+ .creative-card h3{font-size:27px}
+ .hero-roles{font-size:8px}
+ .hero-actions .btn-aman{font-size:10px;padding-inline:18px}
+}
+@media(max-width:767px){
+ .header-inner.container-aman{padding-inline:16px;min-height:65px}
+ .brand-mark{width:39px;height:39px}
+ .brand-label{font-size:11px}
+ .brand-label small{font-size:7px}
+ .hero-home{min-height:0}
+ .hero-shell{grid-template-columns:1fr;gap:48px;padding:131px 0 100px}
+ .hero-title{font-size:clamp(58px,11.7vw,84px);line-height:1.08}
+ .hero-edition{font-size:8px;margin-bottom:24px}
+ .hero-description{font-size:16px;max-width:450px}
+ .hero-roles{font-size:9px;max-width:460px}
+ .hero-actions{max-width:480px;gap:10px}
+ .hero-actions .btn-aman{font-size:11px;padding-inline:21px}
+ .hero-actions .btn-aman:last-child{font-size:10px}
+ .hero-visual{height:580px;max-width:425px;padding-bottom:85px}
+ .portrait-thumb{width:44px;min-width:44px;height:53px}
+ .hero-bottomline-inner{font-size:8px}
+ .part-label{font-size:8px;letter-spacing:.12em}
+ .section-text{font-size:15px}
+ .section-heading{font-size:clamp(43px,8.3vw,67px)}
+ .creative-grid{gap:15px}
+ .creative-card{min-height:365px;padding:25px}
+ .creative-card h3{font-size:27px}
+ .creative-card p{font-size:13px}
+ .inner-hero{min-height:510px;padding:148px 0 75px}
+ .inner-hero h1{font-size:clamp(50px,9vw,76px)}
+ .inner-hero p{font-size:15px}
+ .featured-brands{padding-inline:23px}
+ .venture-card summary{padding:23px 19px;gap:18px}
+ .venture-content{padding:5px 24px 28px}
+ .company-grid{gap:17px}
+ .company-card h3{font-size:25px}
+ .small-card,.journal-card{padding:26px}
+ .small-card h3,.journal-card h3{font-size:25px}
+ .contact-form{padding:29px}
+ .cta-section{padding:95px 0}
+ .footer-top{padding-top:58px;gap:32px}
+}
+@media(max-width:480px){
+ .site-header{top:10px;width:calc(100% - 24px);border-radius:10px}
+ .header-inner.container-aman{padding-inline:13px}
+ .hero-shell{padding-top:122px;gap:34px}
+ .hero-title{font-size:clamp(44px,12.3vw,60px);letter-spacing:-.065em}
+ .hero-edition{font-size:7px;letter-spacing:.12em}
+ .hero-description{font-size:15px;max-width:340px;margin-top:22px}
+ .hero-roles{font-size:8px;line-height:2.1}
+ .hero-actions{margin-top:27px}
+ .hero-actions .btn-aman{min-height:51px;font-size:10px;padding:15px 17px;gap:12px}
+ .hero-actions .btn-aman:last-child{min-height:37px}
+ .hero-visual{height:510px;max-width:365px;padding-bottom:82px}
+ .portrait-caption strong{font-size:28px}
+ .portrait-topline{font-size:7px}
+ .portrait-side-note{font-size:8px}
+ .portrait-stamp{width:75px;height:75px}
+ .creative-card{min-height:345px;padding:28px}
+ .creative-card h3{font-size:31px}
+ .creative-card p{font-size:14px}
+ .creative-icon{width:64px;height:64px;font-size:40px}
+ .section-heading{font-size:clamp(39px,10.7vw,54px)}
+ .about-info .section-heading{font-size:clamp(38px,10.5vw,53px)}
+ .inner-hero{min-height:485px;padding-top:135px}
+ .inner-hero h1{font-size:clamp(42px,11vw,55px)}
+ .inner-hero p{font-size:15px}
+ .small-card,.journal-card{min-height:245px;padding:27px}
+ .company-card{padding:28px;min-height:355px}
+ .company-card h3{font-size:29px}
+ .company-card p{font-size:14px}
+ .featured-brand strong{font-size:15px}
+ .featured-brand small{font-size:10px}
+ .venture-card h3{font-size:22px}
+ .venture-content{padding-left:22px}
+ .contact-form{padding:24px}
+ .input-label{font-size:10px}
+ .cta-section .section-heading{font-size:clamp(38px,10.4vw,48px)}
+ .footer-col>a{font-size:12px}
+ .footer-bottom{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){
+ .creative-card::after,.company-card::after,.small-card::after,.journal-card::after{display:none}
+}

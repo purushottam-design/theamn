@@ -1,0 +1,35 @@
+/* Home hero only: a tilted circular orbit, with camera-facing portraits. */
+.hero-visual.hero-orbit{height:660px;max-width:490px;padding:0;margin-top:0;isolation:isolate;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.has-scroll-orbit{overscroll-behavior-x:none}
+.orbit-heading{position:absolute;top:20px;left:0;right:0;display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--gold);font-size:8px;letter-spacing:.19em}
+.orbit-heading span:last-child{font-size:18px;text-shadow:0 0 20px #d4b87588}
+.orbit-aura{position:absolute;inset:8% -6% 12%;pointer-events:none;background:radial-gradient(ellipse at 50% 54%,#d4b87518,transparent 63%);border-radius:50%}
+.orbit-aura::after{content:'';position:absolute;inset:16% 25%;border-radius:50%;background:radial-gradient(ellipse,#efcf8c15,transparent 70%);box-shadow:0 0 90px #d4b8750b}
+.orbit-scene{position:absolute;inset:45px 0 190px;perspective:900px;outline:none}
+.orbit-scene:focus-visible{outline:1px solid var(--gold);outline-offset:12px;border-radius:50%}
+.orbit-stage{position:absolute;inset:0;transform-style:preserve-3d}
+.orbit-photo{position:absolute;left:50%;top:48%;width:44%;aspect-ratio:4/5;margin:0;border:1px solid #e8cd8cb8;border-radius:48% 48% 45% 45% / 38% 38% 34% 34%;padding:5px;background:linear-gradient(145deg,#e9ce9733,#191711c9 60%);box-shadow:inset 0 0 0 1px #d4b87526,0 16px 32px #0008,0 0 22px #d4b87512;backface-visibility:hidden;will-change:transform,opacity;overflow:hidden;transform:translate(-50%,-50%)}
+.orbit-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 43%;border-radius:inherit;pointer-events:none}
+.orbit-photo::after{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(150deg,#f8dfad16,transparent 40%,#000b);opacity:var(--shade,.2);pointer-events:none}
+.orbit-photo.is-front{border-color:#f4dfad;box-shadow:inset 0 0 0 1px #d4b87540,0 22px 40px #0009,0 0 28px #d4b87524}
+.orbit-ring{position:absolute;left:50%;top:48%;width:91%;height:91%;border:1px solid #d4b87555;border-radius:50%;transform:translate(-50%,-50%) rotateX(67deg);box-shadow:0 0 12px #d4b87518,inset 0 0 14px #d4b87512;pointer-events:none}
+.orbit-ring::after{content:'';position:absolute;inset:8px;border:1px dashed #d4b87527;border-radius:50%}
+.orbit-ring--outer{width:106%;height:106%;border-color:#d4b8751f;transform:translate(-50%,-50%) rotateX(67deg) rotateY(-9deg)}
+.orbit-core{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);width:72px;height:72px;border:1px solid #d4b87522;border-radius:50%;display:grid;place-items:center;color:#d4b87588;font-family:var(--serif);font-size:32px;background:radial-gradient(circle,#d4b8750c,transparent);text-shadow:0 0 28px #d4b87555;pointer-events:none}
+.orbit-particles{position:absolute;inset:9% 0 21%;pointer-events:none}
+.orbit-particles i{position:absolute;left:var(--x);top:var(--y);width:2px;height:2px;border-radius:50%;background:#e8cd8c;box-shadow:0 0 9px #d4b875;animation:orbitParticle 5s ease-in-out infinite alternate;animation-delay:var(--delay);opacity:.5}
+.orbit-caption{position:absolute;left:0;right:0;bottom:74px;display:flex;flex-direction:column;align-items:center;gap:7px;pointer-events:none}
+.orbit-caption .micro-label{font-size:7px;color:#a89a7a;letter-spacing:.2em}
+.orbit-caption strong{font:500 25px var(--serif);color:#e8dfcb}
+.orbit-controls{position:absolute;bottom:16px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:12px}
+.orbit-controls button{display:grid;place-items:center;width:36px;height:36px;padding:0;border:1px solid #d4b87540;border-radius:50%;color:var(--gold);background:linear-gradient(135deg,#d4b87510,#09090999);backdrop-filter:blur(8px);font-size:15px;transition:background .2s,border-color .2s}
+.orbit-controls button:hover{background:#d4b87522;border-color:var(--gold)}
+.orbit-controls button:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+.orbit-count{font-size:8px;letter-spacing:.14em;color:#b4a789;min-width:51px;text-align:center}
+.orbit-hint{position:absolute;bottom:-12px;left:0;right:0;text-align:center;font-size:7px;letter-spacing:.16em;color:#8e8574;pointer-events:none}
+@keyframes orbitParticle{from{transform:translate3d(0,7px,0);opacity:.15}to{transform:translate3d(5px,-12px,0);opacity:.75}}
+@media(max-width:1260px){.hero-visual.hero-orbit{height:610px;max-width:420px}}
+@media(max-width:1080px){.hero-visual.hero-orbit{height:555px}.orbit-heading{font-size:7px}.orbit-caption strong{font-size:23px}}
+@media(max-width:767px){.hero-visual.hero-orbit{height:590px;max-width:450px;justify-self:center}.orbit-scene{inset:40px 0 200px}}
+@media(max-width:480px){.hero-visual.hero-orbit{height:495px;max-width:365px}.orbit-heading{top:0;font-size:7px;letter-spacing:.12em}.orbit-scene{inset:20px 0 185px}.orbit-caption{bottom:78px}.orbit-caption strong{font-size:24px}.orbit-core{width:55px;height:55px;font-size:25px}}
+@media(prefers-reduced-motion:reduce){.orbit-particles i,.orbit-stage{animation:none}.orbit-photo{will-change:auto}}

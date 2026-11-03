@@ -1,0 +1,47 @@
+/* Animation layer only. Base colors, typography, content and layout stay in style.css. */
+.intro-center{width:100%;perspective:900px}
+.intro-title{position:relative;display:inline-block;line-height:1.3;color:#d4b875;text-shadow:0 0 36px #d4b87514}
+.intro-letter{background:linear-gradient(155deg,#aa8e51 5%,#f1dfad 35%,#d4b875 52%,#9c7d3e 78%,#e6ce97);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;transform-origin:50% 100%;backface-visibility:hidden}
+.intro-shimmer{position:absolute;inset:-12% -8%;pointer-events:none;background:linear-gradient(108deg,transparent 38%,#fff4d44a 49%,transparent 60%);mix-blend-mode:screen;opacity:0}
+.intro-beam{box-shadow:0 0 22px #d4b87570;pointer-events:none}
+.intro-aura{position:absolute;width:min(780px,110vw);height:min(460px,65vw);border-radius:50%;background:radial-gradient(ellipse,#d4b87512,transparent 67%);opacity:0;pointer-events:none}
+.intro-progress{position:relative;overflow:hidden;width:145px;height:1px;margin:30px auto 0;background:#d4b87524;opacity:0}
+.intro-progress span{position:absolute;inset:0;background:linear-gradient(90deg,transparent,#e6ce97,transparent);transform:translateX(-100%)}
+.intro-tagline{color:#b6a478;font-size:clamp(7px,1.1vw,10px);line-height:1.8}
+.intro-particles{position:absolute;inset:0;pointer-events:none;opacity:0}
+.intro-particles i{position:absolute;left:calc(9% + var(--particle)*6.3%);top:calc(22% + mod(var(--particle)*17,57)*1%);width:2px;height:2px;border-radius:50%;background:#d4b875;box-shadow:0 0 8px #d4b87566;opacity:.24;animation:introDrift calc(3s + var(--particle)*.12s) ease-in-out infinite alternate}
+/* GSAP owns entrances once ready; the original CSS effects remain the fallback. */
+.cinematic-boot .hero-copy>*,.cinematic-boot .hero-visual,.cinematic-ready .hero-copy>*,.cinematic-ready .hero-visual{animation:none}
+.cinematic-ready .reveal{transition:none;opacity:1;transform:none}
+.cinematic-ready .company-card{animation:none}
+.cinematic-ready .motion-word-clip{display:inline-block;overflow:clip;vertical-align:bottom;padding-bottom:.12em;margin-bottom:-.12em;perspective:700px}
+.motion-word{display:inline-block;transform-origin:50% 100%}
+.motion-glyph{display:inline-block;transform-origin:50% 80%}
+.motion-glyph.motion-gold{animation-delay:calc(var(--glyph-index,0)*-.15s)}
+.cinematic-ready h2 em,.cinematic-ready h2 .serif-highlight{position:relative}
+.cinematic-ready h2 em::after,.cinematic-ready h2 .serif-highlight::after{content:'';position:absolute;inset:auto 0 -.09em;height:1px;background:linear-gradient(90deg,#d4b87590,#d4b87516);transform:scaleX(var(--accent-line,0));transform-origin:left;pointer-events:none}
+.motion-gold{background:linear-gradient(110deg,var(--gold) 16%,#e6ce97 40%,var(--gold) 62%,var(--gold2) 85%);background-size:220% 100%;background-clip:text;-webkit-background-clip:text;color:transparent!important;animation:goldPass 9s ease-in-out infinite}
+@supports not (background-clip:text){.motion-gold{background:none;color:var(--gold)!important}}
+.cinematic-ready .btn-aman{translate:var(--magnet-x,0px) var(--magnet-y,0px)}
+.cinematic-ready .portrait-image-wrap{translate:var(--portrait-x,0px) var(--portrait-y,0px)}
+@media(hover:hover) and (pointer:fine){
+ .creative-card,.company-card,.small-card,.journal-card{transition:box-shadow .4s,border-color .4s,transform .4s var(--ease),background .4s}
+ .creative-card:hover,.company-card:hover,.small-card:hover,.journal-card:hover{box-shadow:0 0 0 1px #d4b87512,0 15px 38px #0004,0 0 28px #d4b87508}
+ .featured-brand strong,.footer-col>a,.studio-link{background-image:linear-gradient(var(--gold),var(--gold));background-size:0 1px;background-position:left bottom;background-repeat:no-repeat;transition:background-size .35s,color .3s}
+ .featured-brand:hover strong,.footer-col>a:hover,.studio-link:hover{background-size:100% 1px}
+ .work-feature-photo,.feature-photo-panel img,.contact-card>img,.journey-card img{transition:filter .6s,scale .6s}
+ .work-feature-photo:hover,.feature-photo-panel img:hover,.contact-card>img:hover{filter:brightness(1.06);scale:1.015}
+ .journey-card:hover img{scale:1.04}
+}
+@keyframes introDrift{from{translate:0 12px;opacity:.12}to{translate:5px -18px;opacity:.4}}
+@keyframes goldPass{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+@media(max-width:480px){.intro-title{font-size:clamp(25px,6.7vw,34px);letter-spacing:.1em}.intro-tagline{letter-spacing:.16em}.intro-progress{margin-top:24px;width:115px}.intro-particles i:nth-child(2n){display:none}}
+@media(prefers-reduced-motion:reduce){
+ .motion-word-clip,.motion-word{transform:none!important;filter:none!important;opacity:1!important}
+ .motion-glyph{transform:none!important;opacity:1!important}
+ .cinematic-ready h2 em::after,.cinematic-ready h2 .serif-highlight::after{display:none}
+ .motion-gold{animation:none;background:none;color:var(--gold)!important}
+ .cinematic-ready .btn-aman,.cinematic-ready .portrait-image-wrap{translate:none}
+ .intro-particles{display:none}
+ .work-feature-photo:hover,.feature-photo-panel img:hover,.contact-card>img:hover,.journey-card:hover img{scale:none}
+}
